@@ -1,0 +1,26 @@
+Provenance
+==========
+
+The files under vendor/ are taken unmodified from the Zephyr project:
+
+    repository: https://github.com/zephyrproject-rtos/zephyr
+    path:       subsys/kvss/nvs/   (nvs.c, nvs_priv.h, Kconfig, CMakeLists.txt)
+                include/zephyr/kvss/nvs.h
+    license:    Apache-2.0 (see LICENSE, taken from the same repository)
+
+Blob digests as fetched (these pin the exact content):
+
+    nvs.c            fd6dd480d5712c08f5275830fb21e5b05f25df38
+    nvs_priv.h       5d9e9dcdaa6d8c931ca36c6c7649f99fa9640dc5
+    Kconfig          48915c2f048eaab348a084088f20c6886a2b6e66
+    CMakeLists.txt   5d660ea88ad3fd038cc0489ee8a9977786af1edc
+    kvss/nvs.h       (fetched in the same commit)
+
+Upstream commit: see the first commit message of this repository.
+
+What this repository changes
+----------------------------
+Nothing yet: src/ is still to be written as the stripped copy. When it is, the
+patch set is exactly `diff -u vendor/nvs.c src/nvs.c`, and it will be limited
+to: replacing the kernel/device/logging dependencies with nvs_port.h, a small
+CRC16, and plain error codes. No functional change to the storage algorithm.
