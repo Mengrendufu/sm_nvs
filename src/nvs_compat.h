@@ -15,7 +15,6 @@
  * arrive after this one, so on the target we take its word for it and only the
  * host build spells them out. */
 #ifdef NVS_HOST_BUILD
-#ifdef NVS_HOST_BUILD
 #define __aligned(x) __attribute__((aligned(x)))
 #define __unused __attribute__((unused))
 #endif
