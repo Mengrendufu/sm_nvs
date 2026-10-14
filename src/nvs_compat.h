@@ -11,8 +11,13 @@
 #define ZTESTABLE_STATIC static
 #define ZTESTABLE
 #define LOG_MODULE_DECLARE(...)
+/* ARM GCC's headers define both of these already. */
+#ifndef __aligned
 #define __aligned(x) __attribute__((aligned(x)))
+#endif
+#ifndef __unused
 #define __unused __attribute__((unused))
+#endif
 #define likely(x) (x)
 #define unlikely(x) (x)
 /* nvs_priv.h uses KB(64) for NVS_MAX_SECTOR_SIZE: without this the bound is
