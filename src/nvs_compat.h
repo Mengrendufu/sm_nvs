@@ -6,26 +6,22 @@
 
 #define __ASSERT_NO_MSG(x) do { (void)(x); } while (0)
 #define __ASSERT(x, ...) do { (void)(x); } while (0)
-/* File scope friendly: a unique tentative object per line. */
 #define BUILD_ASSERT(cond, ...) \
     extern char nvs_build_assert_##__LINE__[(cond) ? 1 : -1]
+#define ZTESTABLE_STATIC static
+#define ZTESTABLE
+#define LOG_MODULE_DECLARE(...)
 #define __aligned(x) __attribute__((aligned(x)))
 #define __unused __attribute__((unused))
 #define likely(x) (x)
 #define unlikely(x) (x)
+/* nvs_priv.h uses KB(64) for NVS_MAX_SECTOR_SIZE: without this the bound is
+ * zero and every mount with a 4096-byte sector would be rejected. */
+#ifndef KB
+#define KB(x) ((x) * 1024)
+#endif
 #ifndef MIN
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
-
-/* Unit-test hooks upstream keeps in the source: plain static here. */
-#ifndef ZTESTABLE_STATIC
-#define ZTESTABLE_STATIC static
-#endif
-#ifndef ZTESTABLE
-#define ZTESTABLE
-#endif
-#ifndef LOG_MODULE_DECLARE
-#define LOG_MODULE_DECLARE(...)
-#endif
 #endif
 #ifndef MAX
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
