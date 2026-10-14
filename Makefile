@@ -4,7 +4,7 @@
 # two suppressions cover exactly that and nothing else. Everything we wrote
 # (nvs_flash_port.c, the tests) is built without them.
 VENDOR_WARNS := -Wno-sign-compare -Wno-unused-parameter
-CFLAGS := -std=c99 -Wall -Wextra -O1 -g -I include -I src -I tests
+CFLAGS := -std=c99 -Wall -Wextra -O1 -g -DNVS_HOST_BUILD -I include -I src -I tests
 
 CORE := src/nvs.c src/nvs_crc.c
 PORT := src/nvs_flash_port.c tests/nor_sim.c

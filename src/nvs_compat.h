@@ -11,11 +11,11 @@
 #define ZTESTABLE_STATIC static
 #define ZTESTABLE
 #define LOG_MODULE_DECLARE(...)
-/* ARM GCC's headers define both of these already. */
-#ifndef __aligned
+/* The ARM toolchain (via CMSIS) defines both of these in headers that may
+ * arrive after this one, so on the target we take its word for it and only the
+ * host build spells them out. */
+#ifdef NVS_HOST_BUILD
 #define __aligned(x) __attribute__((aligned(x)))
-#endif
-#ifndef __unused
 #define __unused __attribute__((unused))
 #endif
 #define likely(x) (x)
