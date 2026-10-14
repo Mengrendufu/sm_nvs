@@ -11,14 +11,16 @@
 #define ZTESTABLE_STATIC static
 #define ZTESTABLE
 #define LOG_MODULE_DECLARE(...)
-/* The ARM toolchain (via CMSIS) defines both of these in headers that may
- * arrive after this one, so on the target we take its word for it and only the
+
+/* Newlib's sys/cdefs.h and CMSIS both define these, and they can arrive after
+ * this header, so on the target we take their word for it - defining them here
+ * is what produced "__aligned redefined" warnings in the board build. Only the
  * host build spells them out. */
 #ifdef NVS_HOST_BUILD
 #define __aligned(x) __attribute__((aligned(x)))
 #define __unused __attribute__((unused))
 #endif
-#endif
+
 #define likely(x) (x)
 #define unlikely(x) (x)
 /* nvs_priv.h uses KB(64) for NVS_MAX_SECTOR_SIZE: without this the bound is
@@ -33,8 +35,10 @@
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 #define BIT(n) (1UL << (n))
-static inline int nvs_is_pow2_(uint32_t x) { return (x != 0U) && ((x & (x - 1U)) == 0U); }
+static inline int nvs_is_pow2_(uint32_t x) {
+    return (x != 0U) && ((x & (x - 1U)) == 0U);
+}
 #ifndef is_power_of_two
 #define is_power_of_two(x) nvs_is_pow2_((uint32_t)(x))
 #endif
-#endif
+#endif /* NVS_COMPAT_H_ */
