@@ -11,6 +11,24 @@ way this project's other third-party pieces are (sm_hsm, sm_sst, common_c).
     ports/      a template for the platform side (read/write/erase + crit)
     tests/      host tests with a RAM-backed fake flash
 
+## NVM orchestration contract
+
+The shared NVM layer consists of exactly these files:
+
+    include/nvm_manager.h   object-level Manager contract and backend vtable
+    include/nvm_meta.h      caller-owned paired RAM block description
+    src/nvm_meta.c          block binding and constructor preconditions
+
+The application supplies `nvm_manager.c`, `nvm_conf.h` and concrete data
+instances. This library does not supply a default Manager implementation,
+registry, filesystem object, board partition or business data singleton.
+The existing function signatures and object layout are unchanged.
+
+Compile `src/nvm_meta.c` when using this layer. The application provides
+`nvm_port.h` with `NVM_DEFINE_MODULE` and `NVM_REQUIRE`; RAM synchronization
+used by its Manager and data instances also stays in that application port.
+The low-level NVS API and its existing host build remain independent.
+
 ## Port contract (the only thing the core needs)
 
     bool     NvsPort_read (uint32_t off, void *buf, uint32_t len);
